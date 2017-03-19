@@ -1,0 +1,41 @@
+{
+  "name": "bnc-backend",
+  "private": true,
+  "version": "0.0.0",
+  "description": "SimpleJSONDatasource Backend for BNC",
+  "main": "index.js",
+  "engines": {
+    "node": ">=7.6.0"
+  },
+  "scripts": {
+    "dev": "nodemon",
+    "start": "node index.js",
+    "lint": "xo",
+    "pretest": "npm run lint",
+    "test": "ava",
+    "test:watch": "ava --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BrandNewCongress/dashboard.git"
+  },
+  "license": "SEE LICENSE IN LICENSE",
+  "bugs": {
+    "url": "https://github.com/BrandNewCongress/dashboard/issues"
+  },
+  "homepage": "https://github.com/BrandNewCongress/dashboard#readme",
+  "dependencies": {
+    "debug": "^2.6.3",
+    "express": "^4.15.2",
+    "mongoose": "^4.9.1"
+  },
+  "devDependencies": {
+    "ava": "^0.18.2",
+    "nodemon": "^1.11.0",
+    "supertest": "^3.0.0",
+    "xo": "^0.18.0"
+  },
+  "xo": {
+    "space": true
+  }
+}
