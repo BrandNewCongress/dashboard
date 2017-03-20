@@ -1,19 +1,14 @@
 {
-  "name": "bnc-backend",
+  "name": "bnc-scripts",
   "private": true,
   "version": "0.0.0",
-  "description": "SimpleJSONDatasource Backend for BNC",
-  "main": "index.js",
+  "description": "Data Processing Scripts for BNC",
+  "main": "script.js",
   "engines": {
     "node": ">=7.6.0"
   },
   "scripts": {
-    "dev": "nodemon",
-    "start": "node index.js",
-    "lint": "xo",
-    "pretest": "npm run lint",
-    "test": "ava",
-    "test:watch": "ava --watch"
+    "lint": "xo"
   },
   "repository": {
     "type": "git",
@@ -25,14 +20,11 @@
   },
   "homepage": "https://github.com/BrandNewCongress/dashboard#readme",
   "dependencies": {
-    "debug": "^2.6.3",
-    "express": "^4.15.2",
-    "mongoose": "^4.9.1"
+    "influx": "^5.0.6",
+    "moment": "^2.18.0",
+    "mongodb": "^2.2.25"
   },
   "devDependencies": {
-    "ava": "^0.18.2",
-    "nodemon": "^1.11.0",
-    "supertest": "^3.0.0",
     "xo": "^0.18.0"
   },
   "xo": {
