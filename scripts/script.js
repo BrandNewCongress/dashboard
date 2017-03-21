@@ -39,7 +39,7 @@ async function main() {
       fields: {
         count: 1
       },
-      timestamp: Date.parse(e.evaluationDate)
+      timestamp: new Date(e.evaluationDate)
     };
     points.push(point);
 
