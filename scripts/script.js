@@ -4,8 +4,22 @@ const {MongoClient} = require('mongodb');
 main();
 
 async function main() {
-  const db = await MongoClient.connect('mongodb://localhost/bnc');
-  const influx = new InfluxDB({host: 'localhost', database: 'bnc'});
+  const db = await MongoClient.connect(process.env.MONGO_URL);
+  const influx = new InfluxDB({
+    host: process.env.INFLUX_HOST,
+    database: process.env.INFLUX_DATABASE,
+    port: process.env.INFLUX_PORT
+  });
+
+  influx.getDatabaseNames()
+  .then(names => {
+    if (!names.includes('bnc')) {
+      return influx.createDatabase('bnc');
+    }
+  })
+  .catch(err => {
+    console.error(`Error creating Influx database!`);
+  })
 
   log('Fetching candidate evaluations');
   let count = 0;
@@ -25,7 +39,7 @@ async function main() {
       fields: {
         count: 1
       },
-      timestamp: e.evaluationDate
+      timestamp: Date.parse(e.evaluationDate)
     };
     points.push(point);
 
