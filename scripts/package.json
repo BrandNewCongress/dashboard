@@ -21,7 +21,7 @@
   "homepage": "https://github.com/BrandNewCongress/dashboard#readme",
   "dependencies": {
     "influx": "^5.0.6",
-    "moment": "^2.18.0",
+    "moment": "^2.18.1",
     "mongodb": "^2.2.25"
   },
   "devDependencies": {

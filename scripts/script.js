@@ -1,5 +1,6 @@
 const {InfluxDB} = require('influx');
 const {MongoClient} = require('mongodb');
+const moment = require('moment');
 
 main();
 
@@ -34,12 +35,16 @@ async function main() {
     if (Array.isArray(e.evaluatorName)) {
       tags.evaluatorName = e.evaluatorName[0];
     }
+    const timestamp = moment(e.evaluationDate, moment.ISO_8601);
+    if (!timestamp.isValid()) {
+      console.error('Invalid timestamp', timestamp);
+    }
     const point = {
       tags,
       fields: {
         count: 1
       },
-      timestamp: new Date(e.evaluationDate)
+      timestamp: timestamp.millisecond()
     };
     points.push(point);
 

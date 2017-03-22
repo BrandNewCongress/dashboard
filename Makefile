@@ -1,3 +1,3 @@
-.PHONY: install
-install:
-	cd scripts && npm i
+.PHONY: bootstrap
+bootstrap:
+	./vagrant-ops/bootstrap.sh
