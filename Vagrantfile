@@ -85,13 +85,13 @@ Vagrant.configure("2") do |config|
 
     cp -f /vagrant/vagrant-ops/mongod.conf /etc/mongod.conf
 
-    service mongod start
-    systemctl enable mongod
-    service influxdb start
-    systemctl enable influxdb
-    systemctl daemon-reload
-    systemctl enable grafana-server.service
-    systemctl start grafana-server
+    sudo service mongod start
+    sudo systemctl enable mongod
+    sudo service influxdb start
+    sudo systemctl enable influxdb
+    sudo systemctl daemon-reload
+    sudo systemctl enable grafana-server.service
+    sudo systemctl start grafana-server
 
     mongorestore --gzip --archive=/vagrant/scripts/bnc-mongo.bson.bz2
   SHELL
