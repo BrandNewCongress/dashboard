@@ -1,7 +1,11 @@
+const path = require('path');
+
 const {InfluxDB} = require('influx');
 const {MongoClient} = require('mongodb');
+const {config: loadEnvConfig} = require('dotenv');
 const moment = require('moment');
 
+loadEnvConfig({path: path.join(__dirname, '.env')});
 main();
 
 async function main() {
@@ -18,15 +22,15 @@ async function main() {
       return influx.createDatabase('bnc');
     }
   })
-  .catch(err => {
+  .catch(() => {
     console.error(`Error creating Influx database!`);
-  })
+  });
 
   log('Fetching candidate evaluations');
   let count = 0;
   let points = [];
 
-  db.collection('Nominee Evaluations').find().forEach(e => {
+  db.collection('Nominee Evaluations').find().forEach(async e => {
     const tags = {
       status: e.status,
       score: e.score,
@@ -42,21 +46,33 @@ async function main() {
     const point = {
       tags,
       fields: {
-        count: 1
+        value: 1
       },
-      timestamp: timestamp.millisecond()
+      timestamp: timestamp.toDate()
     };
     points.push(point);
 
-    if (++count === 200) {
-      influx.writeMeasurement('nominee_evaluations', points).catch(err => {
+    if (++count === 2000) {
+      await influx.writeMeasurement('nominee_evaluations', points).catch(err => {
         console.error(`Encountered error while writing measurements: ${err.message}`);
         console.error('Note that metrics have still been written to the DB');
       });
       count = 0;
       points = [];
     }
-  }, () => {
+  }, async err => {
+    if (err) {
+      throw err;
+    }
+    // Handle leftovers
+    if (points.length > 0) {
+      // eslint-disable-next-line promise/no-promise-in-callback
+      await influx.writeMeasurement('nominee_evaluations', points).catch(err => {
+        console.error(`Encountered error while writing measurements: ${err.message}`);
+        console.error('Note that metrics have still been written to the DB');
+      });
+    }
+    log('Done');
     db.close();
   });
 }

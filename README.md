@@ -27,3 +27,9 @@ and influx and forward all necessary ports.
 Use your local machine to code / develop. The home dir is synced to
 `/vagrant` within the host machine should you need to `vagrant ssh` in
 and access it for any reason.
+
+### Initial Grafana Setup
+
+For now, you'll have to manually configure the datasource in Grafana during the first run. We hope to automate this
+in the future. On your first login to Grafana, click "Add Data Source" when prompted, select InfluxDB, make sure the `host`
+is set to `http://localhost:8086` and the Database is set to `bnc`. You should then be able to use the data source.

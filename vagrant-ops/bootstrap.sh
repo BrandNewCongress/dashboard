@@ -23,7 +23,7 @@ if [ -z "$MONGODB_BZIP_URL" ]; then
 	echo "FAILURE: Could not find mongodb bzip url env variable"
 	echo "Please rerun script with env variable 'MONGODB_BZIP_URL' set."
 	exit 1
-fi	
+fi
 echo "ok"
 
 echo "Downloading mongodb zip to proper location"
@@ -49,7 +49,7 @@ if ! (cd scripts && $CMD); then
 fi
 
 echo "Running initial load script for data from Mongo -> Influx"
-MONGO_URL='mongodb://localhost/heroku_6ljxc24f' INFLUX_HOST=localhost INFLUX_PORT=8086 INFLUX_DATABASE=bnc node ./scripts/script.js
+node ./scripts/script.js
 
 echo "You're all set! Opening localhost:3000 to drop you into the grafana dashboard"
 sleep 1
