@@ -53,6 +53,7 @@ async function main() {
     points.push(point);
 
     if (++count === 2000) {
+      log('Flushing measurements in batch');
       await influx.writeMeasurement('nominee_evaluations', points).catch(err => {
         console.error(`Encountered error while writing measurements: ${err.message}`);
         console.error('Note that metrics have still been written to the DB');
@@ -66,6 +67,7 @@ async function main() {
     }
     // Handle leftovers
     if (points.length > 0) {
+      log('Flushing remaining measurements in batch');
       // eslint-disable-next-line promise/no-promise-in-callback
       await influx.writeMeasurement('nominee_evaluations', points).catch(err => {
         console.error(`Encountered error while writing measurements: ${err.message}`);
